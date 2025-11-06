@@ -83,14 +83,16 @@
         box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
       }
 
-      .bot img {
-        width: 28px;           /* reduced from 36px */
-        height: 28px;          /* keep it square */
+      .message-row.bot-row img {
+        width: 24px;
+        height: 24px;
         border-radius: 6px;
+        object-fit: contain;
+        margin-right: 8px;
         align-self: flex-start;
-        margin-top: 4px;       /* keeps alignment nice with bubble text */
-    }
-
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.1));
+        opacity: 0.9;
+        }
 
       /* Input area */
       .input-area {
@@ -242,13 +244,14 @@
         msg.textContent = text;
 
         if (sender === "bot") {
-          const logo = document.createElement("img");
-          logo.src = "logo.png";
-          logo.alt = "Bot Logo";
-          row.appendChild(logo);
-          row.appendChild(msg);
+        row.classList.add("bot-row");
+        const logo = document.createElement("img");
+        logo.src = "logo.png";
+        logo.alt = "Bot Icon";
+        row.appendChild(logo);
+        row.appendChild(msg);
         } else {
-          row.appendChild(msg);
+        row.appendChild(msg);
         }
 
         chatBox.appendChild(row);
