@@ -54,7 +54,7 @@ const HomePage = () => {
               <div className="team-channel-list__header gap-4">
                 <div className="brand-container">
                   <img src="/logo.png" alt="Logo" className="brand-logo" />
-                  <span className="brand-name">Slap</span>
+                  <span className="brand-name">Cognify</span>
                 </div>
                 <div className="user-button-wrapper">
                   <UserButton />
@@ -100,6 +100,16 @@ const HomePage = () => {
                           <UsersIcon className="size-4" />
                           <span>Direct Messages</span>
                         </div>
+                      </div>
+
+                      {/* QueryBot Button */}
+                      <div className="querybot-container">
+                        <button
+                          onClick={() => window.open("https://your-chatbot-link.com", "_blank")}
+                          className="querybot-btn"
+                        >
+                        🤖 QueryBot
+                        </button>
                       </div>
                       <UsersList activeChannel={activeChannel} />
                     </div>
