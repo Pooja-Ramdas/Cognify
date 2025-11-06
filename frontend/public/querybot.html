@@ -43,21 +43,24 @@
       .chat-container {
         flex: 1;
         overflow-y: auto;
-        padding: 24px;
+        padding: 24px 40px 24px 60px; /* added more left padding to center convo */
         display: flex;
         flex-direction: column;
         gap: 16px;
         position: relative;
         scroll-behavior: smooth;
-      }
+        align-items: center; /* keeps conversation visually centered */
+        }
 
-      .message-row {
+        .message-row {
         display: flex;
         align-items: flex-end;
         gap: 10px;
         max-width: 80%;
+        width: 100%;
         animation: fadeIn 0.4s ease;
-      }
+        }
+
 
       .message {
         padding: 12px 16px;
