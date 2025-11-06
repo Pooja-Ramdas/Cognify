@@ -31,7 +31,7 @@ const AuthPage = () => {
 
             <div className="feature-item">
               <span className="feature-icon">🤖</span>
-              <span>Queryimg & summarization</span>
+              <span>Querying & summarization</span>
             </div>
           </div>
 
