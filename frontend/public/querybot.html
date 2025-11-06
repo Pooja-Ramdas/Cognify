@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QueryBot</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@500&display=swap');
+
+      body {
+        margin: 0;
+        height: 100vh;
+        background: radial-gradient(circle at top left, #1c0b3a, #0a031b 70%);
+        color: #f5f5f5;
+        font-family: 'Inter', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+      }
+
+      /* Header */
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: rgba(22, 9, 45, 0.85);
+        padding: 18px 0;
+        font-size: 1.6rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+      }
+
+      header img {
+        width: 36px;
+        height: 36px;
+      }
+
+      /* Chat Container */
+      .chat-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        position: relative;
+        scroll-behavior: smooth;
+      }
+
+      .message-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+        max-width: 80%;
+        animation: fadeIn 0.4s ease;
+      }
+
+      .message {
+        padding: 12px 16px;
+        border-radius: 14px;
+        word-wrap: break-word;
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+
+      .user {
+        background: linear-gradient(135deg, #6633cc, #9b5cff);
+        align-self: flex-end;
+        margin-left: auto;
+        border-top-right-radius: 0;
+        box-shadow: 0 2px 8px rgba(155, 92, 255, 0.4);
+      }
+
+      .bot {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        align-self: flex-start;
+        border-top-left-radius: 0;
+        box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+      }
+
+      .bot img {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+      }
+
+      /* Input area */
+      .input-area {
+        display: flex;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 12px 16px;
+        background: rgba(18, 9, 40, 0.9);
+        backdrop-filter: blur(10px);
+      }
+
+      input {
+        flex: 1;
+        background: none;
+        border: none;
+        outline: none;
+        color: #fff;
+        padding: 12px;
+        font-size: 1rem;
+        font-family: 'Inter', sans-serif;
+      }
+
+      button {
+        background: linear-gradient(135deg, #7e3ff2, #9f7bff);
+        border: none;
+        color: #fff;
+        padding: 10px 18px;
+        font-size: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 6px rgba(126, 63, 242, 0.4);
+      }
+
+      button:hover {
+        background: linear-gradient(135deg, #9f7bff, #b994ff);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(159, 123, 255, 0.4);
+      }
+
+      /* Intro Section */
+      .intro {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        opacity: 1;
+        transition: all 0.8s ease;
+      }
+
+      .intro h1 {
+        font-size: 2.2rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+      }
+
+      .intro span {
+        font-family: 'JetBrains Mono', monospace;
+        background: linear-gradient(135deg, #b388ff, #d1c4ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .sample-prompts {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .prompt-box {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 14px 18px;
+        color: #e0d7ff;
+        font-family: 'JetBrains Mono', monospace;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        backdrop-filter: blur(8px);
+      }
+
+      .prompt-box:hover {
+        background: rgba(160, 122, 255, 0.15);
+        transform: translateY(-3px);
+        box-shadow: 0 3px 10px rgba(155, 92, 255, 0.3);
+      }
+
+      .hidden {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img src="logo.png" alt="Logo" />
+      <span>QueryBot</span>
+    </header>
+
+    <div class="chat-container" id="chatBox">
+      <div class="intro" id="introSection">
+        <h1>Hello there, I'm <span>Cognify</span></h1>
+        <div class="sample-prompts">
+          <div class="prompt-box" onclick="usePrompt('Summarize our last project meeting about AI model performance')">
+            Summarize our last project meeting about AI model performance
+          </div>
+          <div class="prompt-box" onclick="usePrompt('List the key takeaways from the quarterly sales review')">
+            List the key takeaways from the quarterly sales review
+          </div>
+          <div class="prompt-box" onclick="usePrompt('Explain the decision rationale behind the new pricing strategy')">
+            Explain the decision rationale behind the new pricing strategy
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+      const chatBox = document.getElementById("chatBox");
+      const input = document.getElementById("userInput");
+      const intro = document.getElementById("introSection");
+      let firstPromptSent = false;
+
+      function addMessage(text, sender) {
+        const row = document.createElement("div");
+        row.classList.add("message-row");
+
+        const msg = document.createElement("div");
+        msg.classList.add("message", sender);
+        msg.textContent = text;
+
+        if (sender === "bot") {
+          const logo = document.createElement("img");
+          logo.src = "logo.png";
+          logo.alt = "Bot Logo";
+          row.appendChild(logo);
+          row.appendChild(msg);
+        } else {
+          row.appendChild(msg);
+        }
+
+        chatBox.appendChild(row);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      function hideIntro() {
+        intro.classList.add("hidden");
+        setTimeout(() => {
+          intro.style.display = "none";
+        }, 800);
+      }
+
+      function usePrompt(text) {
+        input.value = text;
+        sendMessage();
+      }
+
+      function sendMessage() {
+        const text = input.value.trim();
+        if (!text) return;
+
+        if (!firstPromptSent) {
+          hideIntro();
+          firstPromptSent = true;
+        }
+
+        addMessage(text, "user");
+        input.value = "";
+
+        setTimeout(() => {
+          addMessage("Sorry, my language model isn’t connected yet.", "bot");
+        }, 600);
+      }
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendMessage();
+      });
+    </script>
+  </body>
+</html>

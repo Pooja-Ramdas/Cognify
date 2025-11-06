@@ -106,7 +106,7 @@ const HomePage = () => {
                       
                       <div className="create-channel-section">
                         <button
-                          onClick={() => window.open("https://your-chatbot-link.com", "_blank")}
+                          onClick={() => window.open("/querybot.html", "_blank")}
                           className="create-channel-btn"
                         >
                           🤖 QueryBot
