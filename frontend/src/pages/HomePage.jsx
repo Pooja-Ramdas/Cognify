@@ -103,14 +103,16 @@ const HomePage = () => {
                       </div>
 
                       {/* QueryBot Button */}
-                      <div className="querybot-container">
+                      
+                      <div className="create-channel-section">
                         <button
                           onClick={() => window.open("https://your-chatbot-link.com", "_blank")}
-                          className="querybot-btn"
+                          className="create-channel-btn"
                         >
-                        🤖 QueryBot
+                          🤖 QueryBot
                         </button>
                       </div>
+
                       <UsersList activeChannel={activeChannel} />
                     </div>
                   )}
