@@ -44,12 +44,21 @@ const AuthPage = () => {
         </div>
       </div>
 
+      
       <div className="auth-right">
-        <div className="auth-image-container">
-          <img src="/auth-i.png" alt="Team collaboration" className="auth-image" />
-          <div className="image-overlay"></div>
-        </div>
+      <div className="auth-image-container">
+        <video
+          src="/auth-video.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="auth-image"
+        />
+        <div className="image-overlay"></div>
       </div>
+    </div>
+
     </div>
   );
 };
