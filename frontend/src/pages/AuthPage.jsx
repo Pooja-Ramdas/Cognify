@@ -46,7 +46,15 @@ const AuthPage = () => {
 
       
       <div className="auth-right">
-      <div className="auth-image-container">
+      <div
+        className="auth-image-container"
+        style={{
+          aspectRatio: "16 / 9", // optional fallback
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <video
           src="/auth-video.mp4"
           autoPlay
@@ -54,10 +62,16 @@ const AuthPage = () => {
           muted
           playsInline
           className="auth-image"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+          }}
         />
         <div className="image-overlay"></div>
       </div>
     </div>
+
 
     </div>
   );
